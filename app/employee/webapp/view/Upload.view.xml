@@ -1,0 +1,92 @@
+<mvc:View
+    controllerName="employee.controller.Upload"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:upload="sap.m.upload">
+    
+    <Dialog 
+        id="upload" 
+        title="Upload Multiple Files" 
+        class="sapUiResponsivePadding"
+        ariaLabelledBy="uploadTitle">
+        
+        <Text id="uploadTitle" text="Upload Multiple Files" visible="false"/>
+        
+        <content>
+            <upload:UploadSet
+                id="uploadSet"
+                uploadUrl="/upload"
+                instantUpload="false"
+                uploadEnabled="true"
+                fileTypes="xlsx,xls,jpeg,jpg,png,pdf"
+                afterItemAdded="onAfterItemAdded"
+                maxFileSize="10485760"
+                beforeUploadStarts="onBeforeUploadStarts"
+                mode="SingleSelectMaster"
+                items="{
+                    path: '/Files',
+                    parameters: {
+                        $orderby: 'createdAt desc'
+                    },
+                    templateShareable: false
+                }">
+                
+                <upload:items>
+                    <upload:UploadSetItem
+                        id="Item"
+                        fileName="{fileName}"
+                        mediaType="{mediaType}"
+                        url="{url}"
+                        thumbnailUrl="{
+                            path: 'mediaType',
+                            formatter: '.formatThumbnailUrl'
+                        }"
+                        enabledEdit="false"
+                        openPressed="onOpenPressed"
+                        removePressed="onRemovePressed">
+                        
+                        <upload:attributes>
+                            <ObjectAttribute
+                                id="CreatedBy"
+                                title="Uploaded By"
+                                text="{createdBy}"
+                                active="false"/>
+                            <ObjectAttribute
+                                id="created"
+                                title="Uploaded on"
+                                text="{createdAt}"
+                                active="false"/>
+                            <ObjectAttribute
+                                id="type"
+                                title="File Type"
+                                text="{mediaType}"
+                                active="false"/>
+                            <ObjectAttribute
+                                id="file"
+                                title="File Size"
+                                text="{size}"
+                                active="false"/>
+                        </upload:attributes>
+                    </upload:UploadSetItem>
+                </upload:items>
+            </upload:UploadSet>
+        </content>
+        
+        <footer>
+            <Toolbar id="toolbar">
+                <ToolbarSpacer id="tools"/>
+                <Button 
+                    id="Uploads" 
+                    text="Upload" 
+                    press="onUploadDialogPress" 
+                    enabled="false"
+                    tooltip="Upload the selected files"/>
+                <Button 
+                    id="cancels" 
+                    text="Cancel" 
+                    press="onDialogCancelPress"
+                    tooltip="Cancel the upload operation"/>
+            </Toolbar>
+        </footer>      
+    </Dialog>
+</mvc:View>

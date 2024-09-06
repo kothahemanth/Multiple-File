@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.14.4",
-      "toolsId": "21112604-5e6f-447f-b725-9617ac246012"
+      "toolsId": "96243a3e-223d-4d2b-bb6a-0f91b8019043"
     },
     "dataSources": {
       "mainService": {
@@ -138,6 +138,19 @@
                 "uploadFile": {
                   "detail": {
                     "route": "FilesObjectPage"
+                  }
+                }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "upload": {
+                      "press": "employee.ext.upload.upload.upload",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "Upload"
+                    }
                   }
                 }
               }

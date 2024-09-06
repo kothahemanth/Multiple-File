@@ -1,8 +1,18 @@
 using { com.hemanth.satinfotech as db } from '../db/schema';
 
 service satinfotech {
-    entity Employee  as projection on db.Employee;
+    entity Employee as projection on db.Employee;
+    entity Files as projection on db.Files;
+    
+    action uploadEmployeeFiles(employeeID: UUID, files: many FileUpload);  // Corrected 'many' keyword
     // action productData(jsonData: String);
+}
+
+type FileUpload {
+    fileName: String;
+    mediaType: String;
+    content: LargeBinary;
+    size: Integer;
 }
 
 annotate satinfotech.Employee with @odata.draft.enabled;
@@ -10,7 +20,6 @@ annotate satinfotech.Employee with @odata.draft.enabled;
 annotate satinfotech.Employee with {
     emp_img @assert.match: '^https?:\/\/.*\.(?:png|jpg|jpeg)$';
 };
-
 
 annotate satinfotech.Employee with {
 @Common.Text : ' {Employee}'
@@ -23,143 +32,138 @@ annotate satinfotech.Employee with @(
     UI.LineItem: [
         {
             $Type : 'UI.DataField',
-            Label:'EmployeeID',
-            Value : emp_id
+            Label: 'EmployeeID',
+            Value: emp_id
         },
         {
             $Type : 'UI.DataField',
-            Value : emp_name
+            Value: emp_name
         },
         {
             $Type : 'UI.DataField',
-            Value : emp_img
+            Value: emp_img
         },
         {
             $Type : 'UI.DataField',
-            Value : salary
+            Value: salary
         },
         {
             $Type : 'UI.DataField',
-            Value : age
+            Value: age
         }
-    ],  
+    ]
 );
+
 annotate satinfotech.Employee with @(       
     UI.FieldGroup #EmployeeInformation : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
-            $Type : 'UI.DataField',
-            
-            Value : emp_id
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : emp_name
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : emp_img
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : salary
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : age
-        }
-        
-        ],
+                $Type : 'UI.DataField',
+                Value: emp_id
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: emp_name
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: emp_img
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: salary
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: age
+            }
+        ]
     },
-
 
     UI.Facets : [
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'EmployeeInfoFacet',
             Label : 'Employee Information',
-            Target : '@UI.FieldGroup#EmployeeInformation',
+            Target : '@UI.FieldGroup#EmployeeInformation'
         },
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'FileInfoFacet',
             Label : 'File Information',
-            Target : 'uploadFile/@UI.LineItem',
-        },
-    ],    
+            Target : 'uploadFile/@UI.LineItem'
+        }
+    ]
 );
-
 
 annotate satinfotech.Files with @(
     UI.LineItem: [
         {
             $Type : 'UI.DataField',
-            Label:'CustomerID',
-            Value : File_ID
+            Label: 'CustomerID',
+            Value: File_ID
         },
         {
             $Type : 'UI.DataField',
-            Value : content
+            Value: content
         },
         {
             $Type : 'UI.DataField',
-            Value : mediaType
+            Value: mediaType
         },
         {
             $Type : 'UI.DataField',
-            Value : fileName
+            Value: fileName
         },
         {
             $Type : 'UI.DataField',
-            Value : size
+            Value: size
         },
         {
             $Type : 'UI.DataField',
-            Value : url
-        },
-    ],  
+            Value: url
+        }
+    ]
 );
+
 annotate satinfotech.Files with @(       
     UI.FieldGroup #FileInformation : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
-            $Type : 'UI.DataField',
-            
-            Value : File_ID
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : content
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : mediaType
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : fileName
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : size
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : url
-        },
-        
-        ],
+                $Type : 'UI.DataField',
+                Value: File_ID
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: content
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: mediaType
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: fileName
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: size
+            },
+            {
+                $Type : 'UI.DataField',
+                Value: url
+            }
+        ]
     },
-
 
     UI.Facets : [
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'FileInfoFacet',
             Label : 'File Information',
-            Target : '@UI.FieldGroup#FileInformation',
-        },
-    ],    
+            Target : '@UI.FieldGroup#FileInformation'
+        }
+    ]
 );
