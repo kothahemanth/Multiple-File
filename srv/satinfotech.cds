@@ -3,17 +3,9 @@ using { com.hemanth.satinfotech as db } from '../db/schema';
 service satinfotech {
     entity Employee as projection on db.Employee;
     entity Files as projection on db.Files;
-    
-    action uploadEmployeeFiles(employeeID: UUID, files: many FileUpload);  // Corrected 'many' keyword
-    // action productData(jsonData: String);
+
 }
 
-type FileUpload {
-    fileName: String;
-    mediaType: String;
-    content: LargeBinary;
-    size: Integer;
-}
 
 annotate satinfotech.Employee with @odata.draft.enabled;
 
@@ -87,12 +79,6 @@ annotate satinfotech.Employee with @(
             ID : 'EmployeeInfoFacet',
             Label : 'Employee Information',
             Target : '@UI.FieldGroup#EmployeeInformation'
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID : 'FileInfoFacet',
-            Label : 'File Information',
-            Target : 'uploadFile/@UI.LineItem'
         }
     ]
 );
@@ -101,11 +87,7 @@ annotate satinfotech.Files with @(
     UI.LineItem: [
         {
             $Type : 'UI.DataField',
-            Label: 'CustomerID',
-            Value: File_ID
-        },
-        {
-            $Type : 'UI.DataField',
+            Label: 'content',
             Value: content
         },
         {
@@ -131,10 +113,6 @@ annotate satinfotech.Files with @(
     UI.FieldGroup #FileInformation : {
         $Type : 'UI.FieldGroupType',
         Data : [
-            {
-                $Type : 'UI.DataField',
-                Value: File_ID
-            },
             {
                 $Type : 'UI.DataField',
                 Value: content

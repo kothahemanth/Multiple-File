@@ -1,0 +1,59 @@
+<mvc:View
+    controllerName="employee.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:upload="sap.m.upload"
+>
+    <App id="app">
+        <pages>
+            <Page id="page" title="Employee Data">
+                <VBox id="box">
+                    <upload:UploadSet
+                        id="employeeUploadSet"
+                        instantUpload="false"
+                        uploadEnabled="true"
+                        showIcons="true"
+                        afterItemAdded="onAfterItemAdded"
+                        uploadCompleted="onUploadCompleted"
+                        items="{
+                            path: '/Files',
+                            parameters: {
+                                $orderby: 'createdAt desc'
+                            },
+                            templateShareable: false
+                        }"
+                    >
+                        <upload:toolbar>
+                            <OverflowToolbar id="Toolbar">
+                                <Title id="title" text="Employee Files" />
+                            </OverflowToolbar>
+                        </upload:toolbar>
+                        <upload:items>
+                            <upload:UploadSetItem
+                                id="Uploadset"
+                                fileName="{fileName}"
+                                mediaType="{mediaType}"
+                                url="{url}"
+                                thumbnailUrl="{
+                                    path: 'mediaType',
+                                    formatter: '.formatThumbnailUrl'
+                                }"
+                                enabledEdit="false"
+                                openPressed="onOpenPressed"
+                                removePressed="onRemovePressed"
+                            >
+                                <upload:attributes>
+                                    <ObjectAttribute id="1" title="Uploaded By" text="{createdBy}" />
+                                    <ObjectAttribute id="2" title="Uploaded on" text="{createdAt}" />
+                                    <ObjectAttribute id="3" title="File Type" text="{mediaType}" />
+                                    <ObjectAttribute id="4" title="File Size" text="{size}" />
+                                </upload:attributes>
+                            </upload:UploadSetItem>
+                        </upload:items>
+                    </upload:UploadSet>
+                </VBox>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

@@ -7,38 +7,33 @@ sap.ui.define([
     function (Controller, JSONModel, Item, MessageToast) {
         "use strict";
 
-        return Controller.extend("employee.controller.Upload", {
-            onInit: function () {
-                var oModel = new JSONModel({
-                    files: []
-                });
-                this.getView().setModel(oModel);
-            },
-
+        return Controller.extend("employee.controller.App", {
             onAfterItemAdded: function (oEvent) {
                 var item = oEvent.getParameter("item");
-                console.log("Item added: ", item); 
-
                 this._createEntity(item)
                     .then((id) => {
-                        console.log("Created Entity ID: ", id); 
                         this._uploadContent(item, id);
                     })
                     .catch((err) => {
-                        console.error("Error during entity creation: ", err);
+                        console.log(err);
                     });
             },
 
             onUploadCompleted: function (oEvent) {
-                var oUploadSet = this.byId("uploadSet");
+                var oUploadSet = this.byId("employeeUploadSet");
                 oUploadSet.removeAllIncompleteItems();
-                oUploadSet.getBinding("items").refresh();
-                MessageToast.show("File upload completed successfully");
+
+                var oBinding = oUploadSet.getBinding("items");
+                if (oBinding) {
+                    oBinding.refresh();
+                } else {
+                    console.warn("Binding for 'items' not found.");
+                }
             },
 
             onRemovePressed: function (oEvent) {
                 oEvent.preventDefault();
-                oEvent.getParameter("item").getBindingContext().delete();    
+                oEvent.getParameter("item").getBindingContext().delete();
                 MessageToast.show("Selected file has been deleted");
             },
 
@@ -55,11 +50,11 @@ sap.ui.define([
                         link.setAttribute('download', that._fileName);
                         document.body.appendChild(link);
                         link.click();
-                        document.body.removeChild(link);                        
+                        document.body.removeChild(link);
                     })
                     .catch((err) => {
                         console.log(err);
-                    });                    
+                    });
             },
 
             _download: function (item) {
@@ -72,17 +67,17 @@ sap.ui.define([
                     xhrFields: {
                         responseType: 'blob'
                     }
-                };    
+                };
 
                 return new Promise((resolve, reject) => {
                     $.ajax(settings)
-                    .done((result) => {
-                        resolve(result);
-                    })
-                    .fail((err) => {
-                        reject(err);
-                    });
-                });                        
+                        .done((result) => {
+                            resolve(result);
+                        })
+                        .fail((err) => {
+                            reject(err);
+                        });
+                });
             },
 
             _createEntity: function (item) {
@@ -91,7 +86,7 @@ sap.ui.define([
                     fileName: item.getFileName(),
                     size: item.getFileObject().size
                 };
-    
+
                 var settings = {
                     url: "/odata/v4/satinfotech/Files",
                     method: "POST",
@@ -100,26 +95,24 @@ sap.ui.define([
                     },
                     data: JSON.stringify(data)
                 };
-    
+
                 return new Promise((resolve, reject) => {
                     $.ajax(settings)
-                    .done((results) => {
-                        console.log("Entity Created: ", results);
-                        resolve(results.ID); 
-                    })
-                    .fail((err) => {
-                        console.error("Error creating entity: ", err);
-                        reject(err);
-                    });
+                        .done((results) => {
+                            resolve(results.ID);
+                        })
+                        .fail((err) => {
+                            reject(err);
+                        });
                 });
             },
 
             _uploadContent: function (item, id) {
                 var url = `/odata/v4/satinfotech/Files(${id})/content`;
-                item.setUploadUrl(url); 
-                var oUploadSet = this.byId("uploadSet");
-                oUploadSet.setHttpRequestMethod("PUT"); 
-                oUploadSet.uploadItem(item); 
+                item.setUploadUrl(url);
+                var oUploadSet = this.byId("employeeUploadSet");
+                oUploadSet.setHttpRequestMethod("PUT");
+                oUploadSet.uploadItem(item);
             },
 
             formatThumbnailUrl: function (mediaType) {
@@ -144,25 +137,6 @@ sap.ui.define([
                         iconUrl = "sap-icon://attachment";
                 }
                 return iconUrl;
-            },
-
-            onDialogFileChange: function (oEvent) {
-                var oFileUploader = oEvent.getSource();
-                var bValid = oFileUploader.getValue() !== "";
-                this.byId("Upload").setEnabled(bValid);
-            },
-
-            onUploadDialogPress: function () {
-                var oFileUploader = this.byId("fileUploader");
-                if (!oFileUploader.getValue()) {
-                    MessageToast.show("Please select a file first");
-                } else {
-                    MessageToast.show("File is being uploaded...");
-                }
-            },
-
-            onDialogCancelPress: function () {
-                this.byId("upload").close();
             }
         });
     });
