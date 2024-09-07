@@ -1,5 +1,6 @@
 namespace com.hemanth.satinfotech;
 using { managed, cuid } from '@sap/cds/common';
+using { Attachments } from '@cap-js/attachments';
 
 entity Files: cuid, managed {
     @Core.MediaType: mediaType 
@@ -16,6 +17,7 @@ entity Files: cuid, managed {
     size: Integer;
     @title: 'Url'
     url: String;
+
 }
 
 entity Employee : cuid, managed {
@@ -33,4 +35,6 @@ entity Employee : cuid, managed {
     
     @title: 'Employee Files'
     files: Association to Files;
+
+    attachments: Composition of many Attachments
 }

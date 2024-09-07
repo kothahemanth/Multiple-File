@@ -6,6 +6,8 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/attachments": "^1.1.6",
+    "@cap-js/postgres": "^1.10.0",
     "@sap/cds": "^8",
     "express": "^4"
   },
@@ -19,11 +21,6 @@
     "watch-employee": "cds watch --open employee/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "sapux": [
-    "app/employee",
-    "app/employee",
-    "app/employee",
-    "app/employee",
-    "app/employee",
     "app/employee"
   ]
 }
