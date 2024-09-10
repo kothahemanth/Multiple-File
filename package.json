@@ -6,8 +6,6 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@cap-js/attachments": "^1.1.6",
-    "@cap-js/postgres": "^1.10.0",
     "@sap/cds": "^8",
     "express": "^4"
   },

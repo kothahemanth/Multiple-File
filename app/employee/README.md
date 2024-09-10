@@ -1,7 +1,7 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Fri Sep 06 2024 15:37:15 GMT+0530 (India Standard Time)|
+|**Generation Date and Time**<br>Mon Sep 09 2024 10:12:02 GMT+0530 (India Standard Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
 |**App Generator Version**<br>1.14.4|
 |**Generation Platform**<br>Visual Studio Code|
@@ -9,19 +9,19 @@
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/satinfotech/|
 |**Module Name**<br>employee|
-|**Application Title**<br>App Title|
+|**Application Title**<br>Employee Information|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.127.2|
+|**UI5 Version**<br>1.128.0|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
 |**Main Entity**<br>Employee|
-|**Navigation Entity**<br>uploadFile|
+|**Navigation Entity**<br>None|
 
 ## employee
 
-An SAP Fiori application.
+Employee Information
 
 ### Starting the generated app
 

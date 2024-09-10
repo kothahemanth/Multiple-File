@@ -1,12 +1,10 @@
 using { com.hemanth.satinfotech as db } from '../db/schema';
 
-
 service satinfotech {
     entity Employee as projection on db.Employee;
     entity Files as projection on db.Files;
-
+    
 }
-
 
 annotate satinfotech.Employee with @odata.draft.enabled;
 
@@ -88,7 +86,6 @@ annotate satinfotech.Files with @(
     UI.LineItem: [
         {
             $Type : 'UI.DataField',
-            Label: 'content',
             Value: content
         },
         {

@@ -3,10 +3,9 @@ sap.ui.require(
         'sap/fe/test/JourneyRunner',
         'employee/test/integration/FirstJourney',
 		'employee/test/integration/pages/EmployeeList',
-		'employee/test/integration/pages/EmployeeObjectPage',
-		'employee/test/integration/pages/FilesObjectPage'
+		'employee/test/integration/pages/EmployeeObjectPage'
     ],
-    function(JourneyRunner, opaJourney, EmployeeList, EmployeeObjectPage, FilesObjectPage) {
+    function(JourneyRunner, opaJourney, EmployeeList, EmployeeObjectPage) {
         'use strict';
         var JourneyRunner = new JourneyRunner({
             // start index.html in web folder
@@ -18,8 +17,7 @@ sap.ui.require(
             {
                 pages: { 
 					onTheEmployeeList: EmployeeList,
-					onTheEmployeeObjectPage: EmployeeObjectPage,
-					onTheFilesObjectPage: FilesObjectPage
+					onTheEmployeeObjectPage: EmployeeObjectPage
                 }
             },
             opaJourney.run
