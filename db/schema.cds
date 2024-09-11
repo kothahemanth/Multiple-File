@@ -19,10 +19,9 @@ entity Employee : cuid, managed {
 entity Files : cuid, managed {
     File: Association to one Employee;
     @Core.MediaType: mediaType
-    content: LargeBinary;
+    content: LargeBinary ;
     @Core.IsMediaType: true
     mediaType: String;
     fileName: String;
     size: Integer;
-    url: String;
 }

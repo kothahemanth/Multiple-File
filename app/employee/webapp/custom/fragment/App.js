@@ -138,6 +138,12 @@ sap.ui.define([
                     iconUrl = "sap-icon://attachment";
             }
             return iconUrl;
+        },
+        
+        onRefreshUploadSet: function() {
+            var oUploadSet = this.byId("uploadSet");
+            oUploadSet.getBinding("items").refresh();
+            MessageToast.show("Upload Set refreshed.");
         }
     };
 });

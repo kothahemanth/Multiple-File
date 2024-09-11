@@ -110,10 +110,6 @@ annotate satinfotech.Files with @(
         {
             $Type : 'UI.DataField',
             Value: size
-        },
-        {
-            $Type : 'UI.DataField',
-            Value: url
         }
     ]
 );
@@ -141,10 +137,6 @@ annotate satinfotech.Files with @(
             {
                 $Type : 'UI.DataField',
                 Value: size
-            },
-            {
-                $Type : 'UI.DataField',
-                Value: url
             }
         ]
     },
