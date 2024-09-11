@@ -1,14 +1,15 @@
 sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-	"sap/ui/core/Item",
-	"sap/m/MessageToast"
-], function(MessageToast) {
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/Item"
+], function(MessageToast, JSONModel, Filter, FilterOperator) {
     'use strict';
 
     return {
-        oninit: function(oEvent) {
-            console.log("Hello");
+        onInit: function(oEvent) {
+            console.log("Performing Multiple Files Update");
         },
 
         onAfterItemAdded: function(oEvent) {
@@ -62,9 +63,8 @@ sap.ui.define([
         onUploadCompleted: function(oEvent) {
             var oUploadSet = this.byId("uploadSet");
             oUploadSet.removeAllIncompleteItems();
-            oUploadSet.getBinding("items").refresh();
+            this._refreshUploadSet();
             MessageToast.show("File uploaded successfully.");
-            
         },
 
         onRemovePressed: function(oEvent) {
@@ -139,11 +139,23 @@ sap.ui.define([
             }
             return iconUrl;
         },
-        
-        onRefreshUploadSet: function() {
+
+        _refreshUploadSet: function() {
+            var path = this.editFlow.getView().getBindingContext().getPath();
+            var employeeId = path.match(/ID=([^,]+)/)[1];
+
             var oUploadSet = this.byId("uploadSet");
-            oUploadSet.getBinding("items").refresh();
-            MessageToast.show("Upload Set refreshed.");
+            var oBinding = oUploadSet.getBinding("items");
+
+            // Apply a filter to show only the files related to the current employee ID
+            var oFilter = new Filter("EmployeeID", FilterOperator.EQ, employeeId);
+            oBinding.filter([oFilter]);
+
+            MessageToast.show("Upload Set refreshed for Employee ID " + employeeId);
+        },
+
+        onRefreshUploadSet: function() {
+            this._refreshUploadSet();
         }
     };
 });
