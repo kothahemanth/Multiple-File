@@ -78,12 +78,23 @@ annotate satinfotech.Employee with @(
             ID : 'EmployeeInfoFacet',
             Label : 'Employee Information',
             Target : '@UI.FieldGroup#EmployeeInformation'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'FileInfoFacet',
+            Label : 'File Information',
+            Target : 'uploadFile/@UI.LineItem'
         }
     ]
 );
 
 annotate satinfotech.Files with @(
     UI.LineItem: [
+        {
+            $Type : 'UI.DataField',
+            Label: 'CustomerID',
+            Value: File_ID
+        },
         {
             $Type : 'UI.DataField',
             Value: content
@@ -111,6 +122,10 @@ annotate satinfotech.Files with @(
     UI.FieldGroup #FileInformation : {
         $Type : 'UI.FieldGroupType',
         Data : [
+            {
+                $Type : 'UI.DataField',
+                Value: File_ID
+            },
             {
                 $Type : 'UI.DataField',
                 Value: content

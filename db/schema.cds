@@ -12,9 +12,12 @@ entity Employee : cuid, managed {
     salary: Decimal(15, 2) ;
     @title: 'Employee Age'
     age: Decimal;
+
+    uploadFile: Composition of many Files on uploadFile.File=$self
 }
 
 entity Files : cuid, managed {
+    File: Association to one Employee;
     @Core.MediaType: mediaType
     content: LargeBinary;
     @Core.IsMediaType: true
