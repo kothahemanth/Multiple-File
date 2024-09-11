@@ -47,7 +47,7 @@ sap.ui.define([
 
             _createEntity(item)
                 .then((id) => {
-                    var url = `/odata/v4/satinfotech/Files(${id})/content`;
+                    var url = `/odata/v4/satinfotech/Employee(ID=${employeeId},IsActiveEntity=false)/uploadFile(ID=${id},IsActiveEntity=false)/content`;
                     item.setUploadUrl(url);
 
                     var oUploadSet = this.byId("uploadSet");
