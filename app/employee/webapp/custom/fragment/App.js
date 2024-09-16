@@ -147,7 +147,6 @@ sap.ui.define([
             var oUploadSet = this.byId("uploadSet");
             var oBinding = oUploadSet.getBinding("items");
 
-            // Apply a filter to show only the files related to the current employee ID
             var oFilter = new Filter("EmployeeID", FilterOperator.EQ, employeeId);
             oBinding.filter([oFilter]);
 
